@@ -63,7 +63,7 @@ function chunkArray<T>(arr: T[], chunkSize: number): T[][] {
   if (chunkSize < 1)
     throw new Error(`"${chunkSize}" is not a valid chunk size`);
 
-  let chunks = [];
+  let chunks: T[][] = [];
   for (let i = 0; i < arr.length; i += chunkSize) {
     chunks.push(arr.slice(i, i + chunkSize));
   }
@@ -74,7 +74,7 @@ function optimizedChunkArray<T>(arr: T[], chunkSize: number): T[][] {
   if (chunkSize < 1)
     throw new Error(`"${chunkSize}" is not a valid chunk size`);
 
-  let chunks = [];
+  let chunks: T[][] = [];
   while (arr.length !== 0) {
     chunks.push(arr.splice(0, chunkSize));
     // Doesn't copy, more memory efficient. But weird behaviour to mutate og array.
@@ -143,7 +143,7 @@ function meassureFilter(arr: number[]): number[] {
 let customMap =
   <T>(mapping: MapMethod<T>) =>
   (arr: any[]) => {
-    let newArr = [];
+    let newArr: any[] = [];
     for (let i = 0; i < arr.length; i++) {
       newArr.push(mapping(arr[i]));
     }
@@ -154,7 +154,7 @@ let doubleElement = customMap(double);
 // Basic filtering function
 type FilterMethod = (value: any, index?: number, array?: any[]) => unknown;
 let customFilter = (filter: FilterMethod) => (arr: any[]) => {
-  let newArr = [];
+  let newArr: any[] = [];
   for (let i = 0; i < arr.length; i++) {
     if (filter(arr[i])) newArr.push(arr[i]);
   }
