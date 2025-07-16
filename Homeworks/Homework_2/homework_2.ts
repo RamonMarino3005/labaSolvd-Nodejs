@@ -13,7 +13,7 @@ import {
   AnyTypedObject,
   TypedObject,
   ConvertToNumberType,
-} from "./types";
+} from "./types.js";
 
 export function addValues(x: AllCommonTypes, y: AllCommonTypes): ValidTypes {
   let leftOp = _toTypedObject(x);
