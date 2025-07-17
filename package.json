@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "execute": "node --loader ts-node/esm ./Homeworks/Homework_4/src/task_7.ts"
+    "execute": "node --loader ts-node/esm ./Homeworks/Homework_7/task_4.ts"
   },
   "devDependencies": {
     "@types/jest": "^29.5.14",
