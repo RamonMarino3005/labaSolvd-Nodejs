@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "execute": "node --loader ts-node/esm ./Homeworks/Homework_8/demo.ts"
+    "execute": "node --loader ts-node/esm ./Homeworks/Homework_9/LinkedList.ts"
   },
   "devDependencies": {
     "@types/jest": "^29.5.14",
