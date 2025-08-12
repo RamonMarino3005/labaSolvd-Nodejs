@@ -57,18 +57,74 @@ export class LinkedList<T> {
    * @param value - The value to delete.
    * @returns True if the value was found and removed, false otherwise.
    */
-  delete(value: T) {
-    let curr = this._head;
-    if (!curr) return false;
+  delete(value: T): boolean {
+    if (!this._head) return false;
 
-    if (curr.data === value) {
+    if (this._head.data === value) {
       this._head = this._head!.next;
+
+      if (this._head === null) {
+        this._tail = this._head;
+      }
+
+      this._size--;
+
       return true;
     }
+
+    let curr = this._head;
 
     while (curr.next !== null) {
       if (curr.next.data === value) {
         curr.next = curr.next.next;
+
+        // If element deleted was the last el, update tail.
+        if (curr.next === null) {
+          this._tail = curr;
+        }
+
+        this._size--;
+        return true;
+      }
+      curr = curr.next;
+    }
+
+    return false;
+  }
+
+  /**
+   * Deletes the first value from the list that satisfied
+   * the provided function.
+   *
+   * @param compareFn - comparison function `(a, b) => boolean` to determine equality.
+   * @returns True if a matching value was found and removed; otherwise, false.
+   */
+  deleteBy(filterFn: (a: T) => boolean): boolean {
+    if (!this._head) return false;
+
+    if (filterFn(this._head.data)) {
+      this._head = this._head!.next;
+
+      if (this._head === null) {
+        this._tail = this._head;
+      }
+
+      this._size--;
+      return true;
+    }
+
+    let curr = this._head;
+
+    while (curr.next !== null) {
+      if (filterFn(curr.next.data)) {
+        curr.next = curr.next.next;
+
+        // If element deleted was the last el, update tail.
+        if (curr.next === null) {
+          this._tail = curr;
+        }
+
+        this._size--;
         return true;
       }
       curr = curr.next;
@@ -93,6 +149,8 @@ export class LinkedList<T> {
 
     curr.next = null;
     this._tail = curr;
+
+    this._size--;
     return tail;
   }
 
@@ -116,6 +174,7 @@ export class LinkedList<T> {
     let shifted = this._head;
     this._head = this._head.next;
 
+    this._size--;
     return shifted;
   }
 
@@ -133,6 +192,30 @@ export class LinkedList<T> {
     }
 
     return false;
+  }
+
+  /**
+   * Searches the linked list for the first element that satisfies the provided function.
+   *
+   * @param predicate - A function that takes an element of type `T` and returns a boolean.
+   *                    The search returns the first element that returns `true`.
+   * @returns The first element in the list that satisfies the predicate, or `null` if none is found.
+   */
+  find(predicate: (value: T) => boolean): T | null {
+    let curr = this._head;
+
+    while (curr !== null) {
+      if (predicate(curr.data)) {
+        return curr.data;
+      }
+      curr = curr.next;
+    }
+
+    return null;
+  }
+
+  isEmpty(): boolean {
+    return this.size === 0;
   }
 
   /**
@@ -216,15 +299,29 @@ export class LinkedList<T> {
   toString() {
     if (!this._head) return "Empty List";
 
-    let str = String(this._head.data);
+    let stringify = (value: T) => {
+      if (value && typeof value === "object") {
+        // Try to stringify safely
+        try {
+          return JSON.stringify(value);
+        } catch {
+          return String(value);
+        }
+      } else {
+        return String(value);
+      }
+    };
 
-    let curr = this._head.next;
+    const stringified: string[] = [];
+
+    let curr: Node<T> | null = this._head;
 
     while (curr !== null) {
-      str += " -> " + String(curr.data);
+      stringified.push(stringify(curr.data));
       curr = curr.next;
     }
-    return str;
+
+    return stringified.join(" -> ");
   }
 
   /**

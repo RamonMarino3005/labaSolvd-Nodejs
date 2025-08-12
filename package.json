@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "execute": "node --loader ts-node/esm ./Homeworks/Homework_9/LinkedList.ts"
+    "execute": "node --loader ts-node/esm ./Homeworks/Homework_10/HashTable.ts"
   },
   "devDependencies": {
     "@types/jest": "^29.5.14",
